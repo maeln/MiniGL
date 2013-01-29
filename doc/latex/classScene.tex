@@ -1,0 +1,139 @@
+\hypertarget{classScene}{\section{Scene Class Reference}
+\label{classScene}\index{Scene@{Scene}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classScene_a0beda0caae14c7bde9c3449f02aaef6b}{draw} ()
+\begin{DoxyCompactList}\small\item\em Make all the Open\-G\-L call to draw the scene. \end{DoxyCompactList}\item 
+int \hyperlink{classScene_ab6a0d0c8751e627c5c19d9ccb6f6afc3}{attach\-Model} (\hyperlink{structPeModel}{Pe\-Model} i\-\_\-model)
+\begin{DoxyCompactList}\small\item\em Attach a model to render in the current scene. \end{DoxyCompactList}\item 
+void \hyperlink{classScene_ad87663cb76a7594946308e8f735a1df6}{gen\-View} (glm\-::vec3 lookat, glm\-::vec3 position, glm\-::vec3 up)
+\begin{DoxyCompactList}\small\item\em Generate the view Matrix of the current scene. \end{DoxyCompactList}\item 
+void \hyperlink{classScene_a0bae0e69c5a972162ffe288df1d134a2}{gen\-Projection} (float fov, float aspect\-Ratio, float near, float far)
+\begin{DoxyCompactList}\small\item\em Generate the projection Matrix attach to the current scene. \end{DoxyCompactList}\item 
+void \hyperlink{classScene_af5ae8c94c6fba5868a524ab4fd64a6e1}{set\-View} (glm\-::mat4 camera)
+\begin{DoxyCompactList}\small\item\em Set the View Matrice of the current scene. \end{DoxyCompactList}\item 
+void \hyperlink{classScene_ad67b74e5b65f98f1b041dfda5b054d82}{set\-Projection} (glm\-::mat4 i\-\_\-\-Projetion)
+\begin{DoxyCompactList}\small\item\em Set the Projection Matrice of the current scene. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classScene_ab6a0d0c8751e627c5c19d9ccb6f6afc3}{\index{Scene@{Scene}!attach\-Model@{attach\-Model}}
+\index{attach\-Model@{attach\-Model}!Scene@{Scene}}
+\subsubsection[{attach\-Model}]{\setlength{\rightskip}{0pt plus 5cm}int Scene\-::attach\-Model (
+\begin{DoxyParamCaption}
+\item[{{\bf Pe\-Model}}]{i\-\_\-model}
+\end{DoxyParamCaption}
+)}}\label{classScene_ab6a0d0c8751e627c5c19d9ccb6f6afc3}
+
+
+Attach a model to render in the current scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i\-\_\-model} & \-: \hyperlink{structPeModel}{Pe\-Model} to attach to the current scene. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Will return 0 if everything went well, -\/1 if there was an error. 
+\end{DoxyReturn}
+\hypertarget{classScene_a0beda0caae14c7bde9c3449f02aaef6b}{\index{Scene@{Scene}!draw@{draw}}
+\index{draw@{draw}!Scene@{Scene}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}int Scene\-::draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classScene_a0beda0caae14c7bde9c3449f02aaef6b}
+
+
+Make all the Open\-G\-L call to draw the scene. 
+
+\begin{DoxyReturn}{Returns}
+Will return 0 if everything went well, -\/1 otherwise. N\-O\-T\-E\-: Should implement different code ( with a nice define for exemple ) to know what the error was. And use exception. 
+\end{DoxyReturn}
+\hypertarget{classScene_a0bae0e69c5a972162ffe288df1d134a2}{\index{Scene@{Scene}!gen\-Projection@{gen\-Projection}}
+\index{gen\-Projection@{gen\-Projection}!Scene@{Scene}}
+\subsubsection[{gen\-Projection}]{\setlength{\rightskip}{0pt plus 5cm}void Scene\-::gen\-Projection (
+\begin{DoxyParamCaption}
+\item[{float}]{fov, }
+\item[{float}]{aspect\-Ratio, }
+\item[{float}]{near, }
+\item[{float}]{far}
+\end{DoxyParamCaption}
+)}}\label{classScene_a0bae0e69c5a972162ffe288df1d134a2}
+
+
+Generate the projection Matrix attach to the current scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fov} & \-: The field of View to use. \\
+\hline
+{\em aspect\-Ratio} & \-: The aspect\-Ratio of the rendering space. Should be updated everytime it's resized. \\
+\hline
+{\em near} & \-: Every object nearer than that will be clip. \\
+\hline
+{\em far} & \-: Every object farer than that will be clip. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classScene_ad87663cb76a7594946308e8f735a1df6}{\index{Scene@{Scene}!gen\-View@{gen\-View}}
+\index{gen\-View@{gen\-View}!Scene@{Scene}}
+\subsubsection[{gen\-View}]{\setlength{\rightskip}{0pt plus 5cm}void Scene\-::gen\-View (
+\begin{DoxyParamCaption}
+\item[{glm\-::vec3}]{lookat, }
+\item[{glm\-::vec3}]{position, }
+\item[{glm\-::vec3}]{up}
+\end{DoxyParamCaption}
+)}}\label{classScene_ad87663cb76a7594946308e8f735a1df6}
+
+
+Generate the view Matrix of the current scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lookat} & \-: The point in World coordinate to look at. \\
+\hline
+{\em position} & \-: The position of the viewer in world coordinate. \\
+\hline
+{\em up} & \-: A vector whoes purpose is to say where is the up of the scene. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classScene_ad67b74e5b65f98f1b041dfda5b054d82}{\index{Scene@{Scene}!set\-Projection@{set\-Projection}}
+\index{set\-Projection@{set\-Projection}!Scene@{Scene}}
+\subsubsection[{set\-Projection}]{\setlength{\rightskip}{0pt plus 5cm}void Scene\-::set\-Projection (
+\begin{DoxyParamCaption}
+\item[{glm\-::mat4}]{i\-\_\-\-Projetion}
+\end{DoxyParamCaption}
+)}}\label{classScene_ad67b74e5b65f98f1b041dfda5b054d82}
+
+
+Set the Projection Matrice of the current scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i\-\_\-\-Projection} & \-: The projection matrix to attach to the scene. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classScene_af5ae8c94c6fba5868a524ab4fd64a6e1}{\index{Scene@{Scene}!set\-View@{set\-View}}
+\index{set\-View@{set\-View}!Scene@{Scene}}
+\subsubsection[{set\-View}]{\setlength{\rightskip}{0pt plus 5cm}void Scene\-::set\-View (
+\begin{DoxyParamCaption}
+\item[{glm\-::mat4}]{camera}
+\end{DoxyParamCaption}
+)}}\label{classScene_af5ae8c94c6fba5868a524ab4fd64a6e1}
+
+
+Set the View Matrice of the current scene. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em camera} & \-: The view matrice. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{scene_8hxx}{scene.\-hxx}\item 
+scene.\-cxx\end{DoxyCompactItemize}
