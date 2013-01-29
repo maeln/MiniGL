@@ -1,0 +1,2 @@
+#ignore tout les fichiers JS de doxygen
+*.js
