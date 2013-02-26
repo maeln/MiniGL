@@ -31,6 +31,7 @@
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -52,7 +53,7 @@ typedef struct
 {
 	GLuint VBOvert; /*!< The VBO that contain the Vertices. */
 	GLuint VBOnorm; /*!< The VBO that contain the Nomals. */
-	GLuint VBOtexC; /*!< The VBO that contain the Texture Coordinate */
+	std::vector<GLuint> VBOtexC; /*!< The VBOs that contain the Texture Coordinate */
 } MeshVBO;
 
 /*!
@@ -99,6 +100,20 @@ class MeshLoader
 		 * \return An PeMesh containing the Mesh data's.
 		 */
 		PeMesh loadMesh(std::string path);
+		
+		/*!
+		 * \brief Upload a mesh to the Video Memory ( on the video card ).
+		 * \param mesh the mesh to upload.
+		 * \param drawType The  draw type of the mesh ( GL_STREAM_DRAW, ... ).
+		 */
+		 void uploadMesh(PeMesh* mesh, GLenum drawType);
+		 
+		 /*!
+		  * \brief Convert a vector of glm::vec3 to a float array.
+		  * \param array The vector to convert.
+		  * \param result The resulting array of float.
+		  */
+		  void vec3float(std::vector<glm::vec3> array, float* result);
 	
 	private:
 		

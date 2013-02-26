@@ -144,3 +144,88 @@ PeMesh MeshLoader::loadMesh(std::string path)
 	return result;
 }
 
+void MeshLoader::uploadMesh(PeMesh* mesh, GLenum drawType)
+{
+	// Vertices VBO.
+	float* vertices = new float[mesh->vertices.size()*3];
+	vec3float(mesh->vertices, vertices);
+	
+	GLuint vaddr;
+	glGenBuffers(1, &vaddr);
+	glBindBuffer(GL_ARRAY_BUFFER, vaddr);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, drawType);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	delete vertices;
+	
+	// Normals VBO.
+	float* normals = new float[mesh->normals.size()*3];
+	vec3float(mesh->normals, normals);
+	
+	GLuint naddr;
+	glGenBuffers(1, &naddr);
+	glBindBuffer(GL_ARRAY_BUFFER, naddr);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, drawType);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	MeshVBO VBOs;
+	VBOs.VBOvert = vaddr;
+	VBOs.VBOnorm = naddr;
+	
+	// Texture Coordinate VBO.
+	if(mesh->nbTexCoord > 0)
+	{
+		std::vector<GLuint> vTexC;
+		for(unsigned int n=0; n < mesh->nbTexCoord; n++)
+		{
+			float* texCoord = new float[mesh->texCoord[n].size()*3];
+			vec3float(mesh->texCoord[n], texCoord);
+			
+			GLuint taddr;
+			glBindBuffer(GL_ARRAY_BUFFER, taddr);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_STATIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			
+			vTexC.push_back(taddr);
+		}
+		
+		VBOs.VBOtexC = vTexC;
+	}
+	
+	// VAO
+	GLuint fvao;
+	glGenVertexArrays(1, &fvao);
+	glBindVertexArray(fvao);
+		glBindBuffer(GL_ARRAY_BUFFER, vaddr);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, naddr);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		if(VBOs.VBOtexC.size() > 0)
+		{
+			for(unsigned int n=0; n < VBOs.VBOtexC.size(); n++)
+			{
+				glBindBuffer(GL_ARRAY_BUFFER, VBOs.VBOtexC[n]);
+					glEnableVertexAttribArray(n+2);
+					glVertexAttribPointer(n+2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+			}
+		}
+			
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	
+	mesh->vbos = VBOs;
+	mesh->mvao = fvao;
+	
+}
+
+void MeshLoader::vec3float(std::vector<glm::vec3> array, float* result)
+{
+	for(unsigned int n=0; n < array.size(); n++)
+	{
+		result[n*3] = array[n].x;
+		result[n*3+1] = array[n].y;
+		result[n*3+2] = array[n].z;
+	}
+}
+
