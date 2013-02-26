@@ -23,6 +23,19 @@
 #ifndef MESHLOADER_HXX
 #define MESHLOADER_HXX
 
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+#include <GL/glew.h>
+
+#include <glm/glm.hpp>
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 /*!
  * \file meshloader.hxx
  * \brief Load a mesh using Assimp, and create all the VBO/VAO for it.
@@ -31,14 +44,64 @@
  * \date 28.01.2013
  */
 
+/*!
+ * \struct MeshVBO
+ * \brief Conatain all the VBO of a Mesh.
+ */
+typedef struct
+{
+	GLuint VBOvert; /*!< The VBO that contain the Vertices. */
+	GLuint VBOnorm; /*!< The VBO that contain the Nomals. */
+	GLuint VBOtexC; /*!< The VBO that contain the Texture Coordinate */
+} MeshVBO;
+
+/*!
+ * \struct PeMesh
+ * \brief A struct that contain everything that describe a mesh.
+ * \bug Currently, the inforation of the mesh is uploaded to the Memory and the Video Memory. It's not a big deal, 
+ * but it could be useful to let the engine free the information in the memory when it's uploaded to the Video Memory.
+ */
+typedef struct 
+{
+	std::vector<glm::vec3> vertices; /*!< An array of vector that contain the vertices of the mesh. */
+	std::vector<glm::vec3> normals; /*!< An array of  vector that contain the normals of the mesh. */
+	
+	unsigned int nbTexCoord; /*!< Number of texture coordinate in the mesh. */
+	std::vector< std::vector<glm::vec3> > texCoord; /*!< An array of vector that contain the Tecture Cootdinate of the Mesh ( can be empty ). */
+	
+	bool uploaded; /*!< Set to true if the mesh has been uploaded to Video Memory ( so it has VBOs ). */
+	
+	MeshVBO vbos; /*!< Contain all the VBO of the Mesh. */
+	
+	GLuint mvao; /*!< The VAO that is use to draw the mesh. */
+} PeMesh;
+
+/*!
+ * \class MeshLoader
+ * brief Load Meshs to Memory.
+ */
 class MeshLoader
 {
 	public:
+		/*!
+		 * \brief Constructor of the MeshLoader class.
+		 */
 		MeshLoader();
+		
+		/*!
+		 * \brief Destuctor of the MeshLoader class.
+		 */
 		virtual ~MeshLoader();
+		
+		/*!
+		 * \brief Load a Mesh from the file system.
+		 * \param path Path of the file to load.
+		 * \return An PeMesh containing the Mesh data's.
+		 */
+		PeMesh loadMesh(std::string path);
 	
 	private:
-		/* add your private declarations */
+		
 };
 
 #endif /* MESHLOADER_HXX */ 
