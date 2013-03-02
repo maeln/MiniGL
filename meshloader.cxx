@@ -50,7 +50,7 @@ PeMesh MeshLoader::loadMesh(std::string path)
 		errorMsg += __FUNCTION__;
 		errorMsg += "] File ";
 		errorMsg += path;
-		errorMsg += " does not contain any mesh.";
+		errorMsg += " does not contain any mesh.\n";
 		
 		std::runtime_error(errorMsg.c_str());
 		
@@ -66,7 +66,7 @@ PeMesh MeshLoader::loadMesh(std::string path)
 		errorMsg += __FUNCTION__;
 		errorMsg += "] File ";
 		errorMsg += path;
-		errorMsg += " contain more than one mesh.";
+		errorMsg += " contain more than one mesh.\n";
 		
 		std::runtime_error(errorMsg.c_str());
 	}
@@ -226,6 +226,28 @@ void MeshLoader::vec3float(std::vector<glm::vec3> array, float* result)
 		result[n*3] = array[n].x;
 		result[n*3+1] = array[n].y;
 		result[n*3+2] = array[n].z;
+	}
+}
+
+void MeshLoader::cleanVMem(PeMesh mesh)
+{
+	if(!mesh.uploaded)
+	{
+		std::string errorMsg = "[ER@";
+		errorMsg += __FILE__;
+		errorMsg += ":";
+		errorMsg += __LINE__;
+		errorMsg += "->";
+		errorMsg += __FUNCTION__;
+		errorMsg += "] Trying to remove a mesh not loaded into Video Memory.\n";
+		std::runtime_error(errorMsg.c_str());
+	}
+	else
+	{
+		glDeleteBuffers(1, &mesh.vbos.VBOnorm);
+		glDeleteBuffers(1, &mesh.vbos.VBOvert);
+		glDeleteBuffers(mesh.vbos.VBOtexC.size(), mesh.vbos.VBOtexC.data());
+		glDeleteVertexArrays(1, &mesh.mvao);
 	}
 }
 

@@ -109,6 +109,12 @@ class MeshLoader
 		 void uploadMesh(PeMesh* mesh, GLenum drawType);
 		 
 		 /*!
+		  * \brief Delete the mesh in video's memory.
+		  * \param mesh Mesh to delete.
+		  */
+		  void cleanVMem(PeMesh mesh);
+		 
+		 /*!
 		  * \brief Convert a vector of glm::vec3 to a float array.
 		  * \param array The vector to convert.
 		  * \param result The resulting array of float.
